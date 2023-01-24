@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <string.h>
+
+char* caesar_decrypt(char* text, int key) {
+  int i;
+  int len = strlen(text);
+  char* decrypted = malloc(len + 1);  // Allocate memory for the decrypted string
+  
+  // Decrypt each letter in the string
+  for (i = 0; i < len; i++) {
+    // Check if the character is a letter
+    if (text[i] >= 'A' && text[i] <= 'Z') {
+      // Decrypt uppercase letters
+      decrypted[i] = ((text[i] - 'A') - key + 26) % 26 + 'A';
+    } else if (text[i] >= 'a' && text[i] <= 'z') {
+      // Decrypt lowercase letters
+      decrypted[i] = ((text[i] - 'a') - key + 26) % 26 + 'a';
+    } else {
+      // Leave non-letters as is
+      decrypted[i] = text[i];
+    }
+  }
+  decrypted[len] = '\0';  // Add null terminator to the end of the string
+  return decrypted;
+}
+
+int main() {
+  char* encrypted = "Xyqwnq";
+  int key = 3;
+  char* decrypted = caesar_decrypt(encrypted, key);
+  printf("Decrypted message: %s\n", decrypted);
+  free(decrypted);  // Remember to free the allocated memory
+  return 0;
+}
